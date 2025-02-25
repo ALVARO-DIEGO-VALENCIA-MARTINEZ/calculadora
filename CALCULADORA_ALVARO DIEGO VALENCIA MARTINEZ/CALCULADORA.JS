@@ -13,12 +13,22 @@ const actualizarPantalla = (valor) => {
 };
 
 const calcular = () => {
-  try {
-    resultado = Function('return ' + pantalla.value)();
-    pantalla.value = resultado;
-  } catch (error) {
-    pantalla.value = 'Error';
+  const expresion = pantalla.value;
+  
+  
+  if (expresion.includes('+')) {
+    resultado = expresion.split('+').reduce((acumulador, valorActual) => parseFloat(acumulador) + parseFloat(valorActual));
+  } else if (expresion.includes('-')) {
+    resultado = expresion.split('-').reduce((acumulador, valorActual) => parseFloat(acumulador) - parseFloat(valorActual));
+  } else if (expresion.includes('*')) {
+    resultado = expresion.split('*').reduce((acumulador, valorActual) => parseFloat(acumulador) * parseFloat(valorActual));
+  } else if (expresion.includes('/')) {
+    resultado = expresion.split('/').reduce((acumulador, valorActual) => parseFloat(acumulador) / parseFloat(valorActual));
+  } else {
+    resultado = parseFloat(expresion); 
   }
+
+  pantalla.value = resultado;
 };
 
 const borrar = () => {
@@ -46,3 +56,4 @@ document.getElementById('btnDivision').addEventListener('click', () => actualiza
 document.getElementById('btnIgual').addEventListener('click', calcular);
 
 document.getElementById('btnBorrar').addEventListener('click', borrar);
+
